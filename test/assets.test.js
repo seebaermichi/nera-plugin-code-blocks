@@ -35,6 +35,13 @@ describe('default stylesheet (D7)', () => {
         }
     })
 
+    it('documents every --nera-code-* custom property in the README theming table', () => {
+        const readme = fs.readFileSync('README.md', 'utf-8')
+        const properties = new Set([...css.matchAll(/var\((--nera-code-[a-z-]+)/g)].map((m) => m[1]))
+        expect(properties.has('--nera-code-button-radius')).toBe(true)
+        for (const property of properties) expect(readme, property).toContain(`| \`${property}\` |`)
+    })
+
     it('makes the shell prompt generated content', () => {
         expect(css).toMatch(/\.nera-code\.nera-code--shell \.nera-code__line::before \{\s*content: var\(--nera-code-prompt, '\$ '\);/)
     })

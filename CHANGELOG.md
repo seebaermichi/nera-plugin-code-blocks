@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-10-10
+
+### Added
+
+-   `--nera-code-button-radius` (default `4px`) sets the copy button's corners in the default stylesheet, so a site with a square design maps one more property instead of overriding the rule. The default output is unchanged.
+
 ## [1.1.0] - 2026-10-10
 
 ### Added

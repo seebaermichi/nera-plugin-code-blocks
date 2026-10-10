@@ -125,7 +125,7 @@ In `markdown`/`md` blocks, a leading `---\n…\n---` is highlighted as YAML and 
 
 ### D7 — Default CSS and JS through `getAssets`
 - The plugin ships `assets/nera-code.css` and `assets/nera-code.js` and returns them from `getAssets` as `_nera/code-blocks.css` and `_nera/code-blocks.js` (config `assets: false` turns it off). The site links them in its layout by hand: plugins cannot touch layouts. README shows the two lines.
-- The CSS uses only custom properties with fallbacks (`--nera-code-bg`, `--nera-code-line`, `--nera-code-accent`, `--nera-code-string`, `--nera-code-muted`, `--nera-code-font`, `--nera-code-radius`, `--nera-code-prompt`, …), so a theme maps its tokens instead of overriding rules. Every default color reaches 4.5:1 on its background.
+- The CSS uses only custom properties with fallbacks (`--nera-code-bg`, `--nera-code-line`, `--nera-code-accent`, `--nera-code-string`, `--nera-code-muted`, `--nera-code-font`, `--nera-code-radius`, `--nera-code-button-radius`, `--nera-code-prompt`, …), so a theme maps its tokens instead of overriding rules. Every default color reaches 4.5:1 on its background.
 - The CSS also styles the shell prompt and the hljs token classes, scoped under `.nera-code`, and plain blocks under a configurable `scope` selector (default none, i.e. not styled).
 - The JS unhides each `[data-nera-code-copy]` when `navigator.clipboard` exists, copies the block's `code.textContent`, and shows `data-done` for 2 s. No i18n in JS: both labels come from the build (D8).
 - Needs core ≥ 4.13.0. Fail loudly on an older core, as plugin-images does (its D12).
@@ -257,6 +257,7 @@ Each slice ends with `npx vitest run && npm run lint` green, the checkboxes tick
 - **No clash left.** The slice 3 scoping holds: `.prose pre` no longer puts margins or a background inside the card, and `.prose code` does not reach `<code>`. The site never had client-side highlighting. An unused `.code-block` design (figure + copy button) in `main.css` was removed because the plugin replaces it.
 - **Output.** 156 blocks processed (bash 60, yaml 39, pug 24, markdown 18, js 12, html 3); plain blocks untouched. The three tracked search indexes came out **byte-identical** to before, so O4 works: no bar labels, also in the live `search-index.json`. `nera build --check`: 0 errors and the same 3 site-chrome warnings. `nera validate` clean. Checked in Chrome: en/de/es labels, Pug and YAML tokens, markdown frontmatter as YAML (D6), `$` prompts, Copy → "Copied" on a real click with no prompt in the copied text, and dark mode (by applying the site's dark media rules).
 - **Not checked:** a block with a file name. No block on the site uses `lang:file`, and adding one is a content change, left to the user.
+- **Follow-up, 1.2.0 (2026-10-10):** the copy button's radius is now `--nera-code-button-radius` (default `4px`, output unchanged), so nera.js.org sets it to `0` with its other properties instead of overriding `.nera-code__copy`. A test checks that every `--nera-code-*` property in the stylesheet is in the README table.
 
 ### Slice 6 — Release
 Follow `nera-plugin-images` slice 8 step by step, confirming every outward step with the user:

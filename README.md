@@ -214,6 +214,7 @@ The default stylesheet ("A Paper": a white card, hairline border, monospace bar)
 | `--nera-code-font` | `ui-monospace, …` | bar, button and code font |
 | `--nera-code-size` | `14px` | code font size |
 | `--nera-code-radius` | `6px` | card corners |
+| `--nera-code-button-radius` | `4px` | copy button corners |
 | `--nera-code-margin` | `1.5rem 0` | space around the card |
 | `--nera-code-prompt` | `'$ '` | shell prompt |
 

@@ -51,7 +51,7 @@
     color: var(--nera-code-muted, #5c626c);
     background: none;
     border: 1px solid var(--nera-code-line, #e4e3dd);
-    border-radius: 4px;
+    border-radius: var(--nera-code-button-radius, 4px);
     padding: 6px 8px;
     cursor: pointer;
 }
