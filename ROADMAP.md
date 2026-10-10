@@ -222,15 +222,15 @@ Each slice ends with `npx vitest run && npm run lint` green, the checkboxes tick
 ### Slice 4 — Other highlighters and Pug
 - [ ] Adapters `src/highlighters/{highlight-js,shiki,none}.js` and loading a site path (D1, D11). Shiki as optional peer, dynamic import, clear error when missing.
 - [ ] Shared fixture suite run against every built-in adapter; one test with a custom adapter from a temp site.
-- [x] Pug per D12, in `nera-highlightjs-pug`, worked on in a **new session started in that folder** (create it there; nothing of it is set up from other repos) (its own slices there are small: scaffold like this repo's slice 0, grammar + markup fixtures, README, release with the same 1.0.0 + CI 1.0.1 procedure as slice 6). **Done 2026-10-10** there (slices 0–3, 1.0.0 prepared; its ROADMAP has the record). Usage: `import pug from '@nera-static/highlightjs-pug'` + `hljs.registerLanguage('pug', pug)`; registers the alias `jade` itself. It needs `javascript` (and `xml` for literal HTML lines) registered, which the full `highlight.js` build does.
-- [ ] Add `@nera-static/highlightjs-pug` as a dependency here (`^1.0.0`, once it is on npm and this repo has a `package.json`) and register it in the highlight.js adapter.
-- [ ] After its release, confirm with the user, then the PR to highlight.js adding it to `SUPPORTED_LANGUAGES.md`.
+- [x] Pug per D12, in `nera-highlightjs-pug`, worked on in a **new session started in that folder** (create it there; nothing of it is set up from other repos) (its own slices there are small: scaffold like this repo's slice 0, grammar + markup fixtures, README, release with the same 1.0.0 + CI 1.0.1 procedure as slice 6). **Done 2026-10-10** there, and **released**: `@nera-static/highlightjs-pug` 1.0.2 on npm (1.0.0 bootstrap, 1.0.1+ via CI OIDC), github.com/seebaermichi/nera-highlightjs-pug, live demo https://seebaermichi.github.io/nera-highlightjs-pug/demo/ (its ROADMAP has the record). Usage: `import pug from '@nera-static/highlightjs-pug'` + `hljs.registerLanguage('pug', pug)`; registers the alias `jade` itself. It needs `javascript` (and `xml` for literal HTML lines) registered, which the full `highlight.js` build does.
+- [ ] Add `@nera-static/highlightjs-pug` as a dependency here (`^1.0.2`; it is on npm, this only waits for this repo's `package.json`) and register it in the highlight.js adapter. A fixture with a ```` ```pug ```` block proves zero-config Pug (acceptance 1).
+- [x] After its release, confirm with the user, then the PR to highlight.js adding it to `SUPPORTED_LANGUAGES.md`. **Opened 2026-10-10** with the user's go: highlightjs/highlight.js#4558, waiting for a maintainer review (first-time contributor, so their CI needs a maintainer's approval to run). Tracked to the merge in `nera-highlightjs-pug/ROADMAP.md` slice 4.
 - [ ] Check whether Shiki's grammar set includes Pug, and note it in the README for `highlighter: shiki`.
 
 ### Slice 5 — Field tests + README
 - [ ] michael-becker-berlin.de: install the packed tarball, delete `plugins/code-blocks`, switch the SCSS to the D3 class names (or map the `--nera-code-*` properties and drop the duplicated rules), move the copy script out of `app.js`. Compare the two Nera posts before/after in the browser; `nera build --check` shows no new findings.
 - [ ] nera.js.org (`nera-website`): first site with highlighting. Pick the `bar` default with the user; run through all ~140 blocks for broken output. Do not push the website change before the release.
-- [ ] README: install, fence syntax incl. the no-spaces limit, config, linking the CSS/JS, theming via custom properties, class reference (D3), Pug note.
+- [ ] README: install, fence syntax incl. the no-spaces limit, config, linking the CSS/JS, theming via custom properties, class reference (D3), Pug note. The Pug note links `@nera-static/highlightjs-pug` (repo and live demo) and says it is registered by default; this is where `nera-highlightjs-pug/ROADMAP.md` slice 4 wants it mentioned (it is not a plugin, so not in `PLUGINS.md` or the website catalog).
 
 ### Slice 6 — Release
 Follow `nera-plugin-images` slice 8 step by step, confirming every outward step with the user:
@@ -239,6 +239,7 @@ Follow `nera-plugin-images` slice 8 step by step, confirming every outward step 
 - [ ] `generator/PLUGINS.md` (alphabetical, count 15 → 16) and `nera-website/pages/{,de/,es/}plugins/index.md` with translated descriptions (no raw `: `).
 - [ ] Release the field-test changes of slice 5 in both sites.
 - [ ] Workspace `CLAUDE.md`: shipped note, plugin count.
+- [ ] Once this repo is public: link `@nera-static/plugin-code-blocks` from the `nera-highlightjs-pug` README (it names the plugin without a link today) and tick that item in `nera-highlightjs-pug/ROADMAP.md` slice 4. A README change there is a patch release (CI, tag `v1.0.x`).
 
 ---
 
