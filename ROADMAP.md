@@ -253,12 +253,21 @@ Each slice ends with `npx vitest run && npm run lint` green, the checkboxes tick
 
 ### Slice 6 — Release
 Follow `nera-plugin-images` slice 8 step by step, confirming every outward step with the user:
-- [ ] GitHub repo `seebaermichi/nera-plugin-code-blocks`, push, private vulnerability reporting, `protect-main` ruleset, secret-scanning push protection, Dependabot config (fleet copy).
-- [ ] 1.0.0 bootstrap publish by hand (user runs `npm publish`), Trusted Publisher, then **1.0.1 via CI within two days** so the Trusted Publisher validates (plugin-images lesson).
-- [ ] `generator/PLUGINS.md` (alphabetical, count 15 → 16) and `nera-website/pages/{,de/,es/}plugins/index.md` with translated descriptions (no raw `: `).
+- [x] GitHub repo `seebaermichi/nera-plugin-code-blocks`, push, private vulnerability reporting, `protect-main` ruleset, secret-scanning push protection, Dependabot config (fleet copy).
+- [x] 1.0.0 bootstrap publish by hand (user runs `npm publish`), Trusted Publisher, then **1.0.1 via CI within two days** so the Trusted Publisher validates (plugin-images lesson).
+- [x] `generator/PLUGINS.md` (alphabetical, count 15 → 16) and `nera-website/pages/{,de/,es/}plugins/index.md` with translated descriptions (no raw `: `).
 - [ ] Release the field-test changes of slice 5 in both sites.
-- [ ] Workspace `CLAUDE.md`: shipped note, plugin count.
-- [ ] Once this repo is public: link `@nera-static/plugin-code-blocks` from the `nera-highlightjs-pug` README (it names the plugin without a link today) and tick that item in `nera-highlightjs-pug/ROADMAP.md` slice 4. A README change there is a patch release (CI, tag `v1.0.x`).
+- [x] Workspace `CLAUDE.md`: shipped note, plugin count.
+- [x] Once this repo is public: link `@nera-static/plugin-code-blocks` from the `nera-highlightjs-pug` README (it names the plugin without a link today) and tick that item in `nera-highlightjs-pug/ROADMAP.md` slice 4. A README change there is a patch release (CI, tag `v1.0.x`).
+
+**Done 2026-10-10**, except "Release the field-test changes of slice 5": the user implements michael-becker-berlin.de themselves, and nera.js.org gets its layout change as a separate step. Each outward step was confirmed by the user. Record:
+- **Decisions before 1.0.0** (user, 2026-10-10): fence syntax `lang:file`, `bar: always`.
+- **Pre-publish check.** The `npm pack` tarball (21 files) installed into a fresh `nera new` site (nera 1.4.1, core 4.14.0): loaded as an npm plugin, three blocks rendered, `public/_nera/` filled, `npx nera-code-blocks` published the config. The registry's 1.0.0 `shasum` (`160d016…`) matches that tarball.
+- **GitHub.** `seebaermichi/nera-plugin-code-blocks`, public, homepage nera.js.org, `test.yml` green on Node 20/22. Private vulnerability reporting, Dependabot alerts + security fixes, secret scanning + push protection, `protect-main` ruleset (copied from plugin-link-attributes), fleet `dependabot.yml`.
+- **npm.** 1.0.0 published by the user (staged publishing left the `0.0.0-stage` placeholder again, and 1.0.0 took a few minutes to appear). Trusted Publisher configured right after. `v1.0.0` on `dc4f080`: CI publish red as expected (`You cannot publish over the previously published versions: 1.0.0`). **1.0.1** (`bf64eac`, README "Known limitations") published by CI over OIDC: green, validates the Trusted Publisher.
+- **npm warning, harmless.** The CI publish logs `"bin[nera-code-blocks]" script name bin/publish-config.js was invalid and removed` (plugin-images 1.0.1 logs the same). The published 1.0.1 manifest still has the `bin`, so `npx nera-code-blocks` works.
+- **Catalogs.** `generator/PLUGINS.md` (Code blocks between Canonical links and Contact form, 15 → 16; push only, `566c557`), nera.js.org `pages/{,de/,es/}plugins/index.md` with translated descriptions (`c025681`; build, validate and `--check` clean).
+- **highlightjs-pug 1.0.3** (README links this plugin), via CI.
 
 ---
 
