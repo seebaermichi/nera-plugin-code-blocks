@@ -215,14 +215,15 @@ Each slice ends with `npx vitest run && npm run lint` green, the checkboxes tick
 
 ### Slice 3 — Default CSS and JS (`getAssets`)
 - [ ] `assets/nera-code.css` from the "A Paper" styles in the field-test site's `blog.scss`, rewritten to `--nera-code-*` custom properties (D7). Check the contrast of every default color.
-- [ ] Also color the scopes `@nera-static/highlightjs-pug` uses (its ROADMAP D2): `selector-class`, `selector-id`, `title.function`, `subst`, `operator`, `meta`. The field-test site's CSS has none of them yet.
+- [ ] Also color the scopes `@nera-static/highlightjs-pug` uses (its ROADMAP D2): `selector-class`, `selector-id`, `title.function`, `subst`, `operator`, `params`, and the JavaScript scopes its attribute values and interpolation produce (`property`, `title.class`, `regexp`). The field-test site's CSS has none of them yet (checked 2026-10-10: it already colors `attr`, `keyword`, `meta`, `name`, `punctuation`, `string`, `comment`).
 - [ ] `assets/nera-code.js` from the site's `CodeCopy` module, reading `data-done`.
 - [ ] `getAssets` + `assets: false`; core-version guard. Tests: entries returned, off switch, assets land in `public/_nera/` in the integration build.
 
 ### Slice 4 — Other highlighters and Pug
 - [ ] Adapters `src/highlighters/{highlight-js,shiki,none}.js` and loading a site path (D1, D11). Shiki as optional peer, dynamic import, clear error when missing.
 - [ ] Shared fixture suite run against every built-in adapter; one test with a custom adapter from a temp site.
-- [ ] Pug per D12, in `nera-highlightjs-pug`, worked on in a **new session started in that folder** (create it there; nothing of it is set up from other repos) (its own slices there are small: scaffold like this repo's slice 0, grammar + markup fixtures, README, release with the same 1.0.0 + CI 1.0.1 procedure as slice 6). Then add `@nera-static/highlightjs-pug` as a dependency here and register it in the highlight.js adapter.
+- [x] Pug per D12, in `nera-highlightjs-pug`, worked on in a **new session started in that folder** (create it there; nothing of it is set up from other repos) (its own slices there are small: scaffold like this repo's slice 0, grammar + markup fixtures, README, release with the same 1.0.0 + CI 1.0.1 procedure as slice 6). **Done 2026-10-10** there (slices 0–3, 1.0.0 prepared; its ROADMAP has the record). Usage: `import pug from '@nera-static/highlightjs-pug'` + `hljs.registerLanguage('pug', pug)`; registers the alias `jade` itself. It needs `javascript` (and `xml` for literal HTML lines) registered, which the full `highlight.js` build does.
+- [ ] Add `@nera-static/highlightjs-pug` as a dependency here (`^1.0.0`, once it is on npm and this repo has a `package.json`) and register it in the highlight.js adapter.
 - [ ] After its release, confirm with the user, then the PR to highlight.js adding it to `SUPPORTED_LANGUAGES.md`.
 - [ ] Check whether Shiki's grammar set includes Pug, and note it in the README for `highlighter: shiki`.
 
