@@ -161,6 +161,7 @@ highlight.js has no Pug grammar, neither in core nor in its list of 3rd-party gr
 ## Open questions (decide with the user)
 
 - **O1 — `title="…"` syntax.** Either keep `lang:file` only (works now), or add a core feature that lets plugins extend markdown-it before pages are rendered (for example an optional `extendMarkdown(md)` export, which needs `getPagesData` to load plugins first). The core feature would also serve future plugins (heading anchors, footnotes, containers). Recommendation: release 1.0 with `lang:file`, and track the core hook separately in `generator/ROADMAP-core.md` if wanted.
+- **O4 — Bar text in the search index** (found 2026-10-10). `plugin-search` runs last and indexes `content` with tags stripped, so every block adds its bar text ("terminal Copy") to the excerpt. The whitespace fix keeps words apart, but the labels are still indexed. A clean fix lives in `nera-plugin-search` (for example: drop elements marked `data-search-ignore` before stripping, and mark the bar with it here): a minor release there and an attribute here. Decide with the user; not part of 1.0 unless asked.
 - **O3 — Line numbers and line highlighting** (variant C of the design had numbers). Not in 1.0 unless asked for.
 
 ---
@@ -206,33 +207,49 @@ Each slice ends with `npx vitest run && npm run lint` green, the checkboxes tick
 
 ### Slice 1 — Engine port with tests
 - [ ] Decide D2/O1 with the user first.
-- [ ] Port `plugins/code-blocks/index.js` into `src/` (`highlight.js`, `render-block.js`, …) and `index.js#getMetaData`, with the D3 markup and D5 rules.
-- [ ] Unit tests: language only; `lang:file`; file name with `:`; unknown language (escaped, bar kept); no language (untouched); inline code untouched; HTML in code escaped once (no `&amp;lt;`); Markdown with and without frontmatter (D6); shell lines and first word (D4); empty block; already processed block skipped; page without code returned as is.
-- [ ] Integration test: build a throwaway site with `@nera-static/core` in a temp dir and check the HTML.
+- [x] Port `plugins/code-blocks/index.js` into `src/` (`highlight.js`, `render-block.js`, …) and `index.js#getMetaData`, with the D3 markup and D5 rules.
+- [x] Unit tests: language only; `lang:file`; file name with `:`; unknown language (escaped, bar kept); no language (untouched); inline code untouched; HTML in code escaped once (no `&amp;lt;`); Markdown with and without frontmatter (D6); shell lines and first word (D4); empty block; already processed block skipped; page without code returned as is.
+- [x] Integration test: build a throwaway site with `@nera-static/core` in a temp dir and check the HTML.
+
+**Done 2026-10-10**, except the first item: the user asked for the whole package in one go, so `lang:file` was implemented as this file recommends, without a separate D2/O1 decision. **Confirm it before slice 6**: after 1.0.0 the fence syntax can only grow (`title="…"` as a minor), never change. Code: `src/fence.js`, `src/render-block.js`, `src/rewrite-html.js`, `index.js`. Learned:
+- cheerio serializes the boolean attributes as `data-nera-code-copy=""` and `hidden=""`. Same DOM as the D3 example, so nothing to do.
+- The wrapper has newlines between its parts (and between title and button). The flex layout ignores them, but `plugin-search` strips tags with a bare regex, and without them its excerpts read `terminalCopynpm install` (found in the nera.js.org field test, see O4).
 
 ### Slice 2 — Config, labels, accessibility
-- [ ] `config/code-blocks.yaml` in the package (documentation/default only) and `bin/publish-config.js`, as in `plugin-link-attributes`.
-- [ ] `bar`, `copy_button`, `shell_languages`, `labels` (D8) with JS fallbacks; tests for each, including a missing config file.
-- [ ] `tabindex="0"` and the hidden button (D9).
+- [x] `config/code-blocks.yaml` in the package (documentation/default only) and `bin/publish-config.js`, as in `plugin-link-attributes`.
+- [x] `bar`, `copy_button`, `shell_languages`, `labels` (D8) with JS fallbacks; tests for each, including a missing config file.
+- [x] `tabindex="0"` and the hidden button (D9).
+
+**Done 2026-10-10.** `src/config.js` validates key by key and warns on bad values, like plugin-images; `src/labels.js` falls back per key (site `<lang>` → built-in `<lang>` → site `en` → built-in `en`). The bin is `npx nera-code-blocks` (`--force` overwrites). `bar` defaults to `always`, as in the configuration sample; on nera.js.org every one of the 156 blocks has a language, so `auto` would show bars only on the 60 `bash` blocks. Still to be confirmed with the user in slice 5. `bar: never` also drops the copy button, which lives in the bar.
 
 ### Slice 3 — Default CSS and JS (`getAssets`)
-- [ ] `assets/nera-code.css` from the "A Paper" styles in the field-test site's `blog.scss`, rewritten to `--nera-code-*` custom properties (D7). Check the contrast of every default color.
-- [ ] Also color the scopes `@nera-static/highlightjs-pug` uses (its ROADMAP D2): `selector-class`, `selector-id`, `title.function`, `subst`, `operator`, `params`, and the JavaScript scopes its attribute values and interpolation produce (`property`, `title.class`, `regexp`). The field-test site's CSS has none of them yet (checked 2026-10-10: it already colors `attr`, `keyword`, `meta`, `name`, `punctuation`, `string`, `comment`).
-- [ ] `assets/nera-code.js` from the site's `CodeCopy` module, reading `data-done`.
-- [ ] `getAssets` + `assets: false`; core-version guard. Tests: entries returned, off switch, assets land in `public/_nera/` in the integration build.
+- [x] `assets/nera-code.css` from the "A Paper" styles in the field-test site's `blog.scss`, rewritten to `--nera-code-*` custom properties (D7). Check the contrast of every default color.
+- [x] Also color the scopes `@nera-static/highlightjs-pug` uses (its ROADMAP D2): `selector-class`, `selector-id`, `title.function`, `subst`, `operator`, `params`, and the JavaScript scopes its attribute values and interpolation produce (`property`, `title.class`, `regexp`). The field-test site's CSS has none of them yet (checked 2026-10-10: it already colors `attr`, `keyword`, `meta`, `name`, `punctuation`, `string`, `comment`).
+- [x] `assets/nera-code.js` from the site's `CodeCopy` module, reading `data-done`.
+- [x] `getAssets` + `assets: false`; core-version guard. Tests: entries returned, off switch, assets land in `public/_nera/` in the integration build.
+
+**Done 2026-10-10.** A third token color, `--nera-code-symbol` (`#8a3ab9`, 6.2:1), covers the Pug scopes (`selector-class`, `selector-id`, `title.function_`, `title.class_`, `property`, `variable`); `subst` and `params` take the ink color, `operator` the muted one, `regexp` the string color. `test/assets.test.js` checks every default text color for 4.5:1 and runs the copy script in a stub DOM. Decided on the way:
+- **`scope` became an opt-in class**, `.nera-code-scope`, not a config key: a static stylesheet cannot read the config. Plain `pre` blocks inside it get the card look without a bar.
+- **Rules on the parts are scoped under `.nera-code`** (specificity 0,2,0). The nera.js.org field test showed its `.prose pre` (0,1,1) overriding `.nera-code__pre` with a grey background and margins inside the card.
+- The copy script marks bound buttons, so including it twice binds once (a falsy-marker bug the test caught).
+- The core guard runs in `getMetaData` whenever `assets` is on, not only when a page has code, because the site links the files from its layout regardless.
 
 ### Slice 4 — Other highlighters and Pug
-- [ ] Adapters `src/highlighters/{highlight-js,shiki,none}.js` and loading a site path (D1, D11). Shiki as optional peer, dynamic import, clear error when missing.
-- [ ] Shared fixture suite run against every built-in adapter; one test with a custom adapter from a temp site.
+- [x] Adapters `src/highlighters/{highlight-js,shiki,none}.js` and loading a site path (D1, D11). Shiki as optional peer, dynamic import, clear error when missing.
+- [x] Shared fixture suite run against every built-in adapter; one test with a custom adapter from a temp site.
 - [x] Pug per D12, in `nera-highlightjs-pug`, worked on in a **new session started in that folder** (create it there; nothing of it is set up from other repos) (its own slices there are small: scaffold like this repo's slice 0, grammar + markup fixtures, README, release with the same 1.0.0 + CI 1.0.1 procedure as slice 6). **Done 2026-10-10** there, and **released**: `@nera-static/highlightjs-pug` 1.0.2 on npm (1.0.0 bootstrap, 1.0.1+ via CI OIDC), github.com/seebaermichi/nera-highlightjs-pug, live demo https://seebaermichi.github.io/nera-highlightjs-pug/demo/ (its ROADMAP has the record). Usage: `import pug from '@nera-static/highlightjs-pug'` + `hljs.registerLanguage('pug', pug)`; registers the alias `jade` itself. It needs `javascript` (and `xml` for literal HTML lines) registered, which the full `highlight.js` build does.
-- [ ] Add `@nera-static/highlightjs-pug` as a dependency here (`^1.0.2`; it is on npm, this only waits for this repo's `package.json`) and register it in the highlight.js adapter. A fixture with a ```` ```pug ```` block proves zero-config Pug (acceptance 1).
+- [x] Add `@nera-static/highlightjs-pug` as a dependency here (`^1.0.2`; it is on npm, this only waits for this repo's `package.json`) and register it in the highlight.js adapter. A fixture with a ```` ```pug ```` block proves zero-config Pug (acceptance 1).
 - [x] After its release, confirm with the user, then the PR to highlight.js adding it to `SUPPORTED_LANGUAGES.md`. **Opened 2026-10-10** with the user's go: highlightjs/highlight.js#4558, waiting for a maintainer review (first-time contributor, so their CI needs a maintainer's approval to run). Tracked to the merge in `nera-highlightjs-pug/ROADMAP.md` slice 4.
-- [ ] Check whether Shiki's grammar set includes Pug, and note it in the README for `highlighter: shiki`.
+- [x] Check whether Shiki's grammar set includes Pug, and note it in the README for `highlighter: shiki`.
+
+**Done 2026-10-10.** Shiki 4.5.0 bundles Pug (id `pug`, alias `jade`); noted in the README. `shiki` is a devDependency for the shared suite and an optional peer (`^4.0.0`, `peerDependenciesMeta`). The Shiki adapter keeps the token markup inside Shiki's `<code>` (its `span.line` per line) and drops its `<pre>`; with `themes` (default GitHub light/dark) tokens carry `--shiki-dark`, README shows the dark-mode CSS. The adapter interface gained an optional `shellLine(line, lang)`: highlight.js uses it for the D4 first-word `hljs-built_in`; adapters without it get each shell line highlighted on its own. A site adapter's default export may be the object or a (async) factory `(options, { cwd })`. Adapters are cached per highlighter, options and site root; a failed creation is not cached. `highlighter_options.languages` registers extra highlight.js grammars by package name or site-relative path.
 
 ### Slice 5 — Field tests + README
 - [ ] michael-becker-berlin.de: install the packed tarball, delete `plugins/code-blocks`, switch the SCSS to the D3 class names (or map the `--nera-code-*` properties and drop the duplicated rules), move the copy script out of `app.js`. Compare the two Nera posts before/after in the browser; `nera build --check` shows no new findings.
 - [ ] nera.js.org (`nera-website`): first site with highlighting. Pick the `bar` default with the user; run through all ~140 blocks for broken output. Do not push the website change before the release.
-- [ ] README: install, fence syntax incl. the no-spaces limit, config, linking the CSS/JS, theming via custom properties, class reference (D3), Pug note. The Pug note links `@nera-static/highlightjs-pug` (repo and live demo) and says it is registered by default; this is where `nera-highlightjs-pug/ROADMAP.md` slice 4 wants it mentioned (it is not a plugin, so not in `PLUGINS.md` or the website catalog).
+- [x] README: install, fence syntax incl. the no-spaces limit, config, linking the CSS/JS, theming via custom properties, class reference (D3), Pug note. The Pug note links `@nera-static/highlightjs-pug` (repo and live demo) and says it is registered by default; this is where `nera-highlightjs-pug/ROADMAP.md` slice 4 wants it mentioned (it is not a plugin, so not in `PLUGINS.md` or the website catalog).
+
+**Partly done 2026-10-10.** README written. **nera.js.org, throwaway field test** (a copy in a scratch directory, the packed tarball installed, the two asset lines added to `theme/views/layouts/layout.pug`; nothing in `nera-website` changed): 105 pages, **156 blocks** (bash 60, yaml 39, pug 24, markdown 18, js 12, html 3), all with tokens, 12 plain blocks left untouched, the text of every `<code>` identical before and after, nothing outside the blocks changed except the search index. `nera build --check`: 0 errors, the same 3 site-chrome warnings (skip link, nav label, search label), none from code blocks. Checked in Chrome: card, bar, `$` prompt and copy button ("Copied" after a click) work. Still open: the `bar` default with the user, the real change in `nera-website` (after the release), and the whole michael-becker-berlin.de item.
 
 ### Slice 6 — Release
 Follow `nera-plugin-images` slice 8 step by step, confirming every outward step with the user:
