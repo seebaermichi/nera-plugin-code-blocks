@@ -29,6 +29,12 @@ describe('rewriteHtml with highlight.js', () => {
         expect(out('code').text()).toBe('title: Impressum')
     })
 
+    it('keeps words apart when the tags are stripped (plugin-search)', async () => {
+        const out = await rewrite(fence('sh', 'npm run build'))
+        const text = out.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+        expect(text).toBe('terminal Copy npm run build')
+    })
+
     it('renders the copy button hidden, with both labels', async () => {
         const out = $(await rewrite(fence('js', 'x'), { lang: 'de' }))
         const button = out('button.nera-code__copy')

@@ -36,7 +36,7 @@ describe('default stylesheet (D7)', () => {
     })
 
     it('makes the shell prompt generated content', () => {
-        expect(css).toMatch(/\.nera-code--shell \.nera-code__line::before \{\s*content: var\(--nera-code-prompt, '\$ '\);/)
+        expect(css).toMatch(/\.nera-code\.nera-code--shell \.nera-code__line::before \{\s*content: var\(--nera-code-prompt, '\$ '\);/)
     })
 
     it('colors the Pug grammar scopes', () => {

@@ -8,6 +8,9 @@
  *
  * Every default text color reaches 4.5:1 on the default background (#fff).
  * Dark mode is the site's: redefine the properties in its own media query.
+ *
+ * Rules on the parts are scoped under .nera-code (specificity 0,2,0), so
+ * they win over a site's usual article rules such as `.prose pre`.
  */
 
 .nera-code {
@@ -19,7 +22,7 @@
     overflow: hidden;
 }
 
-.nera-code__bar {
+.nera-code .nera-code__bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,17 +35,17 @@
     color: var(--nera-code-muted, #5c626c);
 }
 
-.nera-code__title {
+.nera-code .nera-code__title {
     min-width: 0;
     overflow-wrap: anywhere;
 }
 
-.nera-code__title b {
+.nera-code .nera-code__title b {
     font-weight: 500;
     color: var(--nera-code-ink, #0e1116);
 }
 
-.nera-code__copy {
+.nera-code .nera-code__copy {
     flex: none;
     font: 500 12px/1 var(--nera-code-font, ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace);
     color: var(--nera-code-muted, #5c626c);
@@ -53,17 +56,17 @@
     cursor: pointer;
 }
 
-.nera-code__copy:hover,
-.nera-code__copy:focus-visible {
+.nera-code .nera-code__copy:hover,
+.nera-code .nera-code__copy:focus-visible {
     color: var(--nera-code-accent, #2a6fdb);
     border-color: var(--nera-code-accent, #2a6fdb);
 }
 
-.nera-code__copy[hidden] {
+.nera-code .nera-code__copy[hidden] {
     display: none;
 }
 
-.nera-code__pre,
+.nera-code .nera-code__pre,
 .nera-code-scope pre:not(.nera-code__pre) {
     margin: 0;
     padding: 14px 18px;
@@ -76,13 +79,13 @@
     tab-size: 2;
 }
 
-.nera-code__pre:focus-visible,
+.nera-code .nera-code__pre:focus-visible,
 .nera-code-scope pre:not(.nera-code__pre):focus-visible {
     outline: 2px solid var(--nera-code-accent, #2a6fdb);
     outline-offset: -2px;
 }
 
-.nera-code__pre code,
+.nera-code .nera-code__pre code,
 .nera-code-scope pre:not(.nera-code__pre) code {
     font: inherit;
     color: inherit;
@@ -100,7 +103,7 @@
 }
 
 /* Shell blocks: the prompt is generated content, so it is never copied. */
-.nera-code--shell .nera-code__line::before {
+.nera-code.nera-code--shell .nera-code__line::before {
     content: var(--nera-code-prompt, '$ ');
     color: var(--nera-code-muted, #5c626c);
     user-select: none;
