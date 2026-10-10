@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-10
+
+### Added
+
+-   The bar carries `data-search-ignore`, so `@nera-static/plugin-search` 2.2.0 and later leaves the file name and the "Copy" label out of its index and excerpts. With an older plugin-search the labels are still indexed, as before.
+
+### Removed
+
+-   README: the "Search excerpts include the bar text" known limitation; the Markup section shows the new attribute.
+
 ## [1.0.1] - 2026-10-10
 
 ### Changed

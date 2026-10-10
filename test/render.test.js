@@ -23,6 +23,8 @@ describe('rewriteHtml with highlight.js', () => {
             'nera-code__pre',
         ])
         expect(out('.nera-code__title').html()).toBe('yaml')
+        // plugin-search 2.2.0 leaves the bar labels out of its index.
+        expect(out('.nera-code__bar').attr('data-search-ignore')).toBe('')
         expect(out('pre').attr('tabindex')).toBe('0')
         expect(out('code').attr('class')).toBe('hljs language-yaml')
         expect(out('code .hljs-attr').text()).toBe('title:')

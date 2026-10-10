@@ -167,7 +167,7 @@ export default {
 
 ```html
 <div class="nera-code">
-    <div class="nera-code__bar">
+    <div class="nera-code__bar" data-search-ignore>
         <span class="nera-code__title"><b>pages/impressum.md</b> · markdown</span>
         <button class="nera-code__copy" type="button" data-nera-code-copy data-done="Kopiert" hidden>Kopieren</button>
     </div>
@@ -178,7 +178,7 @@ export default {
 | Element | Class / attribute |
 | --- | --- |
 | wrapper | `div.nera-code`, plus `.nera-code--shell` for shell blocks |
-| header bar | `div.nera-code__bar` |
+| header bar | `div.nera-code__bar[data-search-ignore]` |
 | title | `span.nera-code__title`, the file name in `<b>` |
 | copy button | `button.nera-code__copy[data-nera-code-copy][data-done][hidden]` |
 | pre | `pre.nera-code__pre[tabindex="0"]` |
@@ -224,7 +224,6 @@ The rules are scoped under `.nera-code`, so they win over usual article rules su
 ## Known limitations
 
 - **File names cannot contain spaces** (see [Writing code blocks](#writing-code-blocks)).
-- **Search excerpts include the bar text.** [`@nera-static/plugin-search`](https://github.com/seebaermichi/nera-plugin-search) indexes the rendered page with its tags stripped, so each block adds its bar labels (for example `terminal Copy`) in front of the code. The words stay separate, but they are indexed. Set `bar: auto` or `bar: never` if that matters on your site.
 - **No line numbers or highlighted lines** yet.
 
 ## Compatibility

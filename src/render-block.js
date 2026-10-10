@@ -52,7 +52,7 @@ function bar({ lang, file, shell }, { config, labels }) {
 
     // Whitespace between the parts (ignored by the flex layout) keeps tools
     // that strip tags, like plugin-search, from gluing the words together.
-    return `<div class="nera-code__bar"><span class="nera-code__title">${title}</span>${button ? `\n${button}` : ''}</div>\n`
+    return `<div class="nera-code__bar" data-search-ignore><span class="nera-code__title">${title}</span>${button ? `\n${button}` : ''}</div>\n`
 }
 
 /**
