@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2026-10-10
 
 ### Added
 
+-   First release. Requires `@nera-static/core` 4.13.0 or later for the default stylesheet and copy script (the `getAssets` hook).
 -   Build-time highlighting of fenced code blocks with a language, rendered as `div.nera-code` with a header bar (`nera-code__bar`, `nera-code__title`), a copy button (`nera-code__copy`, hidden until the script can copy) and a keyboard-focusable `pre.nera-code__pre`.
 -   Fence syntax `lang:path/to/file` for a file name in the bar, split on the first colon.
 -   Shell blocks (`shell_languages`, default `sh`, `bash`, `shell`, `zsh`, `console`): one `span.nera-code__line` per line, the prompt from CSS so it is never copied.

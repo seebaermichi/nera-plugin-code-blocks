@@ -206,12 +206,12 @@ Each slice ends with `npx vitest run && npm run lint` green, the checkboxes tick
 **Done 2026-10-10.** Scaffold copied from `nera-plugin-images` (eslint config, `.gitignore`, workflows, husky hooks, LICENSE). Lockfile generated with Node 22.22.0 / npm 10.9.4 and committed with the scaffold. `npm audit` reports `braces` (high, no fix) only through the dev-only `@nera-static/core` → `cpy`/`fast-glob` → `micromatch`; consumers never install it from here, so nothing to do in this repo. `.github/dependabot.yml` waits for slice 6 with the rest of the GitHub setup.
 
 ### Slice 1 — Engine port with tests
-- [ ] Decide D2/O1 with the user first.
+- [x] Decide D2/O1 with the user first.
 - [x] Port `plugins/code-blocks/index.js` into `src/` (`highlight.js`, `render-block.js`, …) and `index.js#getMetaData`, with the D3 markup and D5 rules.
 - [x] Unit tests: language only; `lang:file`; file name with `:`; unknown language (escaped, bar kept); no language (untouched); inline code untouched; HTML in code escaped once (no `&amp;lt;`); Markdown with and without frontmatter (D6); shell lines and first word (D4); empty block; already processed block skipped; page without code returned as is.
 - [x] Integration test: build a throwaway site with `@nera-static/core` in a temp dir and check the HTML.
 
-**Done 2026-10-10**, except the first item: the user asked for the whole package in one go, so `lang:file` was implemented as this file recommends, without a separate D2/O1 decision. **Confirm it before slice 6**: after 1.0.0 the fence syntax can only grow (`title="…"` as a minor), never change. Code: `src/fence.js`, `src/render-block.js`, `src/rewrite-html.js`, `index.js`. Learned:
+**Done 2026-10-10**, except the first item: the user asked for the whole package in one go, so `lang:file` was implemented as this file recommends, without a separate D2/O1 decision. **Confirmed by the user 2026-10-10** before the release: `lang:file` for 1.0; `title="…"` may come later as a minor (O1). Code: `src/fence.js`, `src/render-block.js`, `src/rewrite-html.js`, `index.js`. Learned:
 - cheerio serializes the boolean attributes as `data-nera-code-copy=""` and `hidden=""`. Same DOM as the D3 example, so nothing to do.
 - The wrapper has newlines between its parts (and between title and button). The flex layout ignores them, but `plugin-search` strips tags with a bare regex, and without them its excerpts read `terminalCopynpm install` (found in the nera.js.org field test, see O4).
 
@@ -220,7 +220,7 @@ Each slice ends with `npx vitest run && npm run lint` green, the checkboxes tick
 - [x] `bar`, `copy_button`, `shell_languages`, `labels` (D8) with JS fallbacks; tests for each, including a missing config file.
 - [x] `tabindex="0"` and the hidden button (D9).
 
-**Done 2026-10-10.** `src/config.js` validates key by key and warns on bad values, like plugin-images; `src/labels.js` falls back per key (site `<lang>` → built-in `<lang>` → site `en` → built-in `en`). The bin is `npx nera-code-blocks` (`--force` overwrites). `bar` defaults to `always`, as in the configuration sample; on nera.js.org every one of the 156 blocks has a language, so `auto` would show bars only on the 60 `bash` blocks. Still to be confirmed with the user in slice 5. `bar: never` also drops the copy button, which lives in the bar.
+**Done 2026-10-10.** `src/config.js` validates key by key and warns on bad values, like plugin-images; `src/labels.js` falls back per key (site `<lang>` → built-in `<lang>` → site `en` → built-in `en`). The bin is `npx nera-code-blocks` (`--force` overwrites). `bar` defaults to `always`, as in the configuration sample; on nera.js.org every one of the 156 blocks has a language, so `auto` would show bars only on the 60 `bash` blocks. **Confirmed by the user 2026-10-10: `always`.** `bar: never` also drops the copy button, which lives in the bar.
 
 ### Slice 3 — Default CSS and JS (`getAssets`)
 - [x] `assets/nera-code.css` from the "A Paper" styles in the field-test site's `blog.scss`, rewritten to `--nera-code-*` custom properties (D7). Check the contrast of every default color.
