@@ -221,6 +221,12 @@ Every default text color reaches a 4.5:1 contrast on the default background. For
 
 The rules are scoped under `.nera-code`, so they win over usual article rules such as `.prose pre`. Blocks without a language are not styled, unless you add the class `nera-code-scope` to a container (your article element, say): then plain `pre` blocks inside it get the same card look, without a bar.
 
+## Known limitations
+
+- **File names cannot contain spaces** (see [Writing code blocks](#writing-code-blocks)).
+- **Search excerpts include the bar text.** [`@nera-static/plugin-search`](https://github.com/seebaermichi/nera-plugin-search) indexes the rendered page with its tags stripped, so each block adds its bar labels (for example `terminal Copy`) in front of the code. The words stay separate, but they are indexed. Set `bar: auto` or `bar: never` if that matters on your site.
+- **No line numbers or highlighted lines** yet.
+
 ## Compatibility
 
 - **`@nera-static/core` 4.13.0 or later** (the `getAssets` hook, which copies the stylesheet and script into `public/`). On an older core the build stops with a message naming the required version, rather than publishing pages that link to missing files. With `assets: false` the check is skipped, and any core from 4.3.0 (which awaits async hooks) works.
