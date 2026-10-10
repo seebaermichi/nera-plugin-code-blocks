@@ -196,11 +196,13 @@ All keys optional; `getConfig` returns `{}` for a missing file, so every key has
 Each slice ends with `npx vitest run && npm run lint` green, the checkboxes ticked, a dated note, and a commit on `main`. Nothing is published before slice 6.
 
 ### Slice 0 — Repository scaffold
-- [ ] `package.json` (`@nera-static/plugin-code-blocks`, `0.0.0`, `"type": "module"`, `engines.node >=20.18.1`, `exports`, `files` incl. `src`/`assets`, `publishConfig.access: public`, `peerDependencies: { "@nera-static/core": ">=4.13.0" }`), `index.js` stub, `LICENSE` (MIT, 2026), `CHANGELOG.md` (`## [Unreleased]`), `README.md` stub linking https://nera.js.org.
-- [ ] Copy `eslint.config.js`, `.gitignore`, `.github/workflows/test.yml` and `publish.yml`, `.husky/` plus `prepare: husky` verbatim from `nera-plugin-images`.
-- [ ] Dependencies: `highlight.js`, `cheerio`, `@nera-static/plugin-utils`. Dev: `vitest`, `eslint`, `husky`, `@nera-static/core` `^4.14.0`.
-- [ ] `npm install` with npm ≥ 10.9 (Node 22, see the plugin-images slice 0 note), **commit the lockfile in the scaffold commit**, before any workflow that runs `npm ci` (workspace `CLAUDE.md`, ordering rule 1).
-- [ ] Do **not** create the GitHub repo yet (slice 6).
+- [x] `package.json` (`@nera-static/plugin-code-blocks`, `0.0.0`, `"type": "module"`, `engines.node >=20.18.1`, `exports`, `files` incl. `src`/`assets`, `publishConfig.access: public`, `peerDependencies: { "@nera-static/core": ">=4.13.0" }`), `index.js` stub, `LICENSE` (MIT, 2026), `CHANGELOG.md` (`## [Unreleased]`), `README.md` stub linking https://nera.js.org.
+- [x] Copy `eslint.config.js`, `.gitignore`, `.github/workflows/test.yml` and `publish.yml`, `.husky/` plus `prepare: husky` verbatim from `nera-plugin-images`.
+- [x] Dependencies: `highlight.js`, `cheerio`, `@nera-static/plugin-utils`. Dev: `vitest`, `eslint`, `husky`, `@nera-static/core` `^4.14.0`.
+- [x] `npm install` with npm ≥ 10.9 (Node 22, see the plugin-images slice 0 note), **commit the lockfile in the scaffold commit**, before any workflow that runs `npm ci` (workspace `CLAUDE.md`, ordering rule 1).
+- [x] Do **not** create the GitHub repo yet (slice 6).
+
+**Done 2026-10-10.** Scaffold copied from `nera-plugin-images` (eslint config, `.gitignore`, workflows, husky hooks, LICENSE). Lockfile generated with Node 22.22.0 / npm 10.9.4 and committed with the scaffold. `npm audit` reports `braces` (high, no fix) only through the dev-only `@nera-static/core` → `cpy`/`fast-glob` → `micromatch`; consumers never install it from here, so nothing to do in this repo. `.github/dependabot.yml` waits for slice 6 with the rest of the GitHub setup.
 
 ### Slice 1 — Engine port with tests
 - [ ] Decide D2/O1 with the user first.

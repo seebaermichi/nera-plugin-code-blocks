@@ -1,0 +1,62 @@
+{
+    "name": "@nera-static/plugin-code-blocks",
+    "version": "0.0.0",
+    "description": "A plugin for Nera static site generator to highlight fenced code blocks at build time, with a file name bar, a copy button and shell prompts.",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint .",
+        "test": "vitest",
+        "prepare": "husky"
+    },
+    "type": "module",
+    "exports": {
+        ".": "./index.js"
+    },
+    "files": [
+        "index.js",
+        "src",
+        "assets",
+        "CHANGELOG.md"
+    ],
+    "keywords": [
+        "nera",
+        "nera-plugin",
+        "static-site-generator",
+        "code-blocks",
+        "syntax-highlighting",
+        "highlight.js",
+        "shiki",
+        "copy-button"
+    ],
+    "author": "Michael Becker",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/seebaermichi/nera-plugin-code-blocks"
+    },
+    "bugs": {
+        "url": "https://github.com/seebaermichi/nera-plugin-code-blocks/issues"
+    },
+    "homepage": "https://github.com/seebaermichi/nera-plugin-code-blocks#readme",
+    "publishConfig": {
+        "access": "public"
+    },
+    "peerDependencies": {
+        "@nera-static/core": ">=4.13.0"
+    },
+    "engines": {
+        "node": ">=20.18.1"
+    },
+    "sideEffects": false,
+    "dependencies": {
+        "@nera-static/plugin-utils": "^1.6.1",
+        "cheerio": "^1.2.0",
+        "highlight.js": "^11.12.0"
+    },
+    "devDependencies": {
+        "@nera-static/core": "^4.14.0",
+        "eslint": "^10.12.0",
+        "husky": "^9.1.7",
+        "vitest": "^5.0.3"
+    }
+}
