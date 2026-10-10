@@ -1,0 +1,170 @@
+/*
+ * @nera-static/plugin-code-blocks — default stylesheet (design "A Paper").
+ *
+ * Every color, font and size is a --nera-code-* custom property with a
+ * fallback, so a theme maps its own tokens instead of overriding rules:
+ *
+ *   .nera-code { --nera-code-accent: var(--my-accent); }
+ *
+ * Every default text color reaches 4.5:1 on the default background (#fff).
+ * Dark mode is the site's: redefine the properties in its own media query.
+ */
+
+.nera-code {
+    margin: var(--nera-code-margin, 1.5rem 0);
+    background: var(--nera-code-bg, #ffffff);
+    color: var(--nera-code-ink, #0e1116);
+    border: 1px solid var(--nera-code-line, #e4e3dd);
+    border-radius: var(--nera-code-radius, 6px);
+    overflow: hidden;
+}
+
+.nera-code__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 41px;
+    padding: 6px 14px;
+    border-bottom: 1px solid var(--nera-code-line, #e4e3dd);
+    font: 500 12px/1.2 var(--nera-code-font, ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace);
+    letter-spacing: 0.03em;
+    color: var(--nera-code-muted, #5c626c);
+}
+
+.nera-code__title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.nera-code__title b {
+    font-weight: 500;
+    color: var(--nera-code-ink, #0e1116);
+}
+
+.nera-code__copy {
+    flex: none;
+    font: 500 12px/1 var(--nera-code-font, ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace);
+    color: var(--nera-code-muted, #5c626c);
+    background: none;
+    border: 1px solid var(--nera-code-line, #e4e3dd);
+    border-radius: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
+.nera-code__copy:hover,
+.nera-code__copy:focus-visible {
+    color: var(--nera-code-accent, #2a6fdb);
+    border-color: var(--nera-code-accent, #2a6fdb);
+}
+
+.nera-code__copy[hidden] {
+    display: none;
+}
+
+.nera-code__pre,
+.nera-code-scope pre:not(.nera-code__pre) {
+    margin: 0;
+    padding: 14px 18px;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    font: 400 var(--nera-code-size, 14px)/1.7 var(--nera-code-font, ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace);
+    color: var(--nera-code-ink, #0e1116);
+    overflow-x: auto;
+    tab-size: 2;
+}
+
+.nera-code__pre:focus-visible,
+.nera-code-scope pre:not(.nera-code__pre):focus-visible {
+    outline: 2px solid var(--nera-code-accent, #2a6fdb);
+    outline-offset: -2px;
+}
+
+.nera-code__pre code,
+.nera-code-scope pre:not(.nera-code__pre) code {
+    font: inherit;
+    color: inherit;
+    background: none;
+    padding: 0;
+}
+
+/* Plain blocks (no language) are left alone unless the site opts in by
+   putting .nera-code-scope on a container, e.g. its article element. */
+.nera-code-scope pre:not(.nera-code__pre) {
+    margin: var(--nera-code-margin, 1.5rem 0);
+    background: var(--nera-code-bg, #ffffff);
+    border: 1px solid var(--nera-code-line, #e4e3dd);
+    border-radius: var(--nera-code-radius, 6px);
+}
+
+/* Shell blocks: the prompt is generated content, so it is never copied. */
+.nera-code--shell .nera-code__line::before {
+    content: var(--nera-code-prompt, '$ ');
+    color: var(--nera-code-muted, #5c626c);
+    user-select: none;
+}
+
+/* highlight.js tokens, including the scopes of @nera-static/highlightjs-pug. */
+.nera-code .hljs-keyword,
+.nera-code .hljs-attr,
+.nera-code .hljs-attribute,
+.nera-code .hljs-built_in,
+.nera-code .hljs-name,
+.nera-code .hljs-selector-tag,
+.nera-code .hljs-section,
+.nera-code .hljs-type,
+.nera-code .hljs-doctag,
+.nera-code .hljs-link {
+    color: var(--nera-code-accent, #2a6fdb);
+}
+
+.nera-code .hljs-string,
+.nera-code .hljs-number,
+.nera-code .hljs-literal,
+.nera-code .hljs-regexp,
+.nera-code .hljs-symbol,
+.nera-code .hljs-bullet,
+.nera-code .hljs-addition {
+    color: var(--nera-code-string, #1d7a55);
+}
+
+.nera-code .hljs-selector-class,
+.nera-code .hljs-selector-id,
+.nera-code .hljs-selector-attr,
+.nera-code .hljs-selector-pseudo,
+.nera-code .hljs-title,
+.nera-code .hljs-title.function_,
+.nera-code .hljs-title.class_,
+.nera-code .hljs-property,
+.nera-code .hljs-variable,
+.nera-code .hljs-template-variable,
+.nera-code .hljs-deletion {
+    color: var(--nera-code-symbol, #8a3ab9);
+}
+
+.nera-code .hljs-comment,
+.nera-code .hljs-quote,
+.nera-code .hljs-meta,
+.nera-code .hljs-punctuation,
+.nera-code .hljs-operator {
+    color: var(--nera-code-muted, #5c626c);
+}
+
+.nera-code .hljs-subst,
+.nera-code .hljs-params {
+    color: var(--nera-code-ink, #0e1116);
+}
+
+.nera-code .hljs-comment {
+    font-style: italic;
+}
+
+.nera-code .hljs-strong {
+    font-weight: 600;
+}
+
+.nera-code .hljs-emphasis {
+    font-style: italic;
+}

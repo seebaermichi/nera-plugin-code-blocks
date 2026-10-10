@@ -1,0 +1,28 @@
+# @nera-static/plugin-code-blocks — every key is optional.
+# Copy this file to your site's config/ folder (npx nera-code-blocks) and edit it there.
+
+# Show the header bar: "always" (every block with a language), "auto" (only
+# when a file name is set or the block is a shell block) or "never".
+bar: always
+
+# Copy button in the bar.
+copy_button: true
+
+# Fence languages rendered as shell sessions with a prompt.
+shell_languages: [sh, bash, shell, zsh, console]
+
+# Labels per page language (meta.lang, else app.lang). English and German are
+# built in; add your languages here.
+labels:
+    en: { copy: Copy, copied: Copied, terminal: terminal }
+    de: { copy: Kopieren, copied: Kopiert, terminal: Terminal }
+
+# Ship the default stylesheet and copy script to public/_nera/ via getAssets.
+assets: true
+
+# highlight.js (default) | shiki (npm install shiki) | none | ./path/to/adapter.js
+highlighter: highlight.js
+
+# Passed to the highlighter. highlight.js: { languages: { name: package-or-path } };
+# shiki: { themes: { light: github-light, dark: github-dark }, langs: [] }.
+highlighter_options: {}
