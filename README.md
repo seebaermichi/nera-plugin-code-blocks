@@ -1,5 +1,8 @@
 # @nera-static/plugin-code-blocks
 
+[![Test](https://github.com/seebaermichi/nera-plugin-code-blocks/actions/workflows/test.yml/badge.svg)](https://github.com/seebaermichi/nera-plugin-code-blocks/actions/workflows/test.yml)
+[![npm version](https://img.shields.io/npm/v/@nera-static/plugin-code-blocks)](https://www.npmjs.com/package/@nera-static/plugin-code-blocks)
+
 A plugin for the [Nera](https://github.com/seebaermichi/nera) static site generator that turns fenced code blocks into highlighted, accessible code cards at build time: syntax highlighting, a header bar with the file name (or "terminal"), a copy button, and shell prompts that are never copied.
 
 📖 **Documentation:** [nera.js.org](https://nera.js.org)

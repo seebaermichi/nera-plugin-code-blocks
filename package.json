@@ -1,6 +1,6 @@
 {
     "name": "@nera-static/plugin-code-blocks",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "A plugin for Nera static site generator to highlight fenced code blocks at build time, with a file name bar, a copy button and shell prompts.",
     "main": "index.js",
     "scripts": {
